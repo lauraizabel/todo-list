@@ -8,16 +8,20 @@ const bodyParser = require("body-parser")
 
 router.use(bodyParser.urlencoded({extended: true}))
 
-//db.connect()
 
-router.route("/")
+router.route("/:userId")
 
 .get(task_controller.task_list)
+
+
+router.route("/:userId/create")
+
+.get(task_controller.task_create_get)
 
 .post(task_controller.task_create_post)
 
 
-router.route("/:id")
+router.route("/:userId/:taskId")
 
 .get(task_controller.task_by_id)
 
@@ -26,3 +30,4 @@ router.route("/:id")
 .put(task_controller.task_update_put)
 
 module.exports = router
+

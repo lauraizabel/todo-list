@@ -5,7 +5,7 @@ db.on('connect', () => {
     console.log('connected to database');
 });
 
-//CREATE USER TABLE
+//CREATE TASK TABLE
 const createTaskTable = () => {
     const taskCreateQuery = `CREATE TABLE IF NOT EXISTS tasks (
         id SERIAL PRIMARY KEY,
@@ -24,7 +24,27 @@ const createTaskTable = () => {
     });
 };
 
-//DROP USER TABLE
+//CREATE USER TABLE
+const createUserTable = () => {
+    const userCreateQuery = `CREATE TABLE IF NOT EXISTS users (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(40) NOT NULL,
+        email VARCHAR(100),
+        password VARCHAR(500),
+        tasks 
+    )`;
+    db.query(userCreateQuery)
+    .then((res) => {
+        console.log(res);
+        db.end();
+    })
+    .catch((err) => {
+        console.log(err);
+        db.end();
+    });
+};
+
+//DROP TASK TABLE
 const dropTaskTable = () => {
     const taskDropQuery = 'DROP TABLE IF EXISTS tasks';
     db.query(taskDropQuery)
@@ -44,4 +64,5 @@ db.on('remove', () => {
 });
 
 //createTaskTable()
+createUserTable()
 //dropTaskTable()
