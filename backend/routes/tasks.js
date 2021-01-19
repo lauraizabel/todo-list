@@ -1,6 +1,9 @@
 const express = require("express")
 const router = express.Router()
 
+// authentication module
+const auth = require("../auth/auth")
+
 // controllers modules
 const task_controller = require("../controllers/taskController")
 
@@ -9,25 +12,25 @@ const bodyParser = require("body-parser")
 router.use(bodyParser.urlencoded({extended: true}))
 
 
-router.route("/:userId")
+router.route("/")
 
-.get(task_controller.task_list)
-
-
-router.route("/:userId/create")
-
-.get(task_controller.task_create_get)
-
-.post(task_controller.task_create_post)
+.get(auth, task_controller.task_list)
 
 
-router.route("/:userId/:taskId")
+router.route("/create")
 
-.get(task_controller.task_by_id)
+.get(auth, task_controller.task_create_get)
 
-.delete(task_controller.task_delete)
+.post(auth, task_controller.task_create_post)
 
-.put(task_controller.task_update_put)
+
+router.route("/:taskId")
+
+.get(auth, task_controller.task_by_id)
+
+.delete(auth, task_controller.task_delete)
+
+.put(auth, task_controller.task_update_put)
 
 module.exports = router
 

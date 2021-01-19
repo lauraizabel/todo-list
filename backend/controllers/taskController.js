@@ -2,7 +2,7 @@ const db = require("../models/pool")
 
 //retorna todas as tasks
 exports.task_list = (req, res) => {
-    const userId = req.params.userId
+    const userId = req.userId
     db("tasks").where("user_author", userId).then(data => {
         res.send(data)
     })
@@ -15,8 +15,7 @@ exports.task_create_get = (req, res) => {
 
 //cria uma task usando POST form
 exports.task_create_post = (req, res) => {
-    const userId = req.params.userId
-    console.log(req.params)
+    const userId = req.userId
 
     const taskTitle = req.body.title
     const taskDescription = req.body.description
@@ -36,7 +35,7 @@ exports.task_create_post = (req, res) => {
 //retorna task especifica - usa o id
 exports.task_by_id = (req, res) => {
     const taskId = req.params.taskId
-    const userId = req.params.userId
+    const userId = req.userId
 
     db("tasks").where({
         task_id: taskId,
@@ -51,7 +50,7 @@ exports.task_by_id = (req, res) => {
 //deleta task
 exports.task_delete = (req, res) => {
     const taskId = req.params.taskId
-    const userId = req.params.userId
+    const userId = req.userId
 
     db("tasks").where({
         task_id: taskId,
@@ -66,7 +65,7 @@ exports.task_delete = (req, res) => {
 // Atualiza task (put) usando form
 exports.task_update_put = (req, res) => {
     const taskId = req.params.taskId
-    const userId = req.params.userId
+    const userId = req.userId
 
     const taskTitle = req.body.title
     const taskDescription = req.body.description
