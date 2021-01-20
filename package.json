@@ -1,0 +1,8 @@
+{
+  "name": "todo-list",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/lauraizabel/todo-list.git",
+  "author": "Laura Izabel <lauraizabel2563@gmail.com>",
+  "license": "MIT"
+}
