@@ -5,14 +5,7 @@
   "repository": "https://github.com/lauraizabel/todo-list.git",
   "author": "Laura Izabel <lauraizabel2563@gmail.com>",
   "license": "MIT",
-  "dependencies": {
-    "@babel/polyfill": "^7.12.1",
-    "bcrypt": "^5.0.0",
-    "cors": "^2.8.5",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
-    "knex": "^0.21.16",
-    "pg": "^8.5.1"
+  "scripts": {
+    "postinstall": "cd backend && npm install"
   }
 }
