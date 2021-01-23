@@ -54,24 +54,37 @@ exports.user_register_post = (req, res) => {
     const userEmail = req.body.email
     var userPassword = req.body.password
 
-    bcrypt.hash(userPassword, saltRounds, (err, hash) => {
-        if (err) {
-            console.log(err);
-            res.status(500).json({
-                error: true, message: 'error due registration, try again later'
+    db("users").where("email", userEmail).then(data => {
+        if (data.length === 0) {
+            bcrypt.hash(userPassword, saltRounds, (err, hash) => {
+                if (err) {
+                    console.log(err);
+                    res.status(500).json({
+                        error: true, message: 'error due registration, try again later'
+                    });
+                } else {
+                    db("users").insert({
+                        name: userName,
+                        email: userEmail,
+                        password: hash
+                    }).then(() => {
+                        res.send("success")
+                    }).catch(err => {
+                        console.log(err)
+                    })
+                }
             });
         } else {
-            db("users").insert({
-                name: userName,
-                email: userEmail,
-                password: hash
-            }).then(() => {
-                res.send("success")
-            }).catch(err => {
-                console.log(err)
-            })
+            res.status(401).json({
+                error: true, 
+                message: 'email already registered'
+            });
         }
-    });
+    }).catch(err => {
+        console.log(err)
+    })
+
+    
 }
 
 exports.user_page_get = (req, res) => {
@@ -86,8 +99,13 @@ exports.user_page_get = (req, res) => {
 
 exports.user_page_delete = (req, res) => {
     const userId = req.userId
-    db("users").where("user_id", userId).del().then(data => {
-        res.send("sucess")
+
+    db("tasks").where("user_author", userId).del().then(data => {
+        db("users").where("user_id", userId).del().then(data => {
+            res.send("sucess")
+        }).catch(err => {
+            console.log(err)
+        })
     }).catch(err => {
         console.log(err)
     })
